@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ravi Raj | Professional Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+     /* ======================
+       Global Reset & Theme (responsive focused)
+       ====================== */
+     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+     html, body { height: 100%; }
+    body { background-color:#f3f6fa; background-image:linear-gradient(rgba(22,115,201,.055) 1px, transparent 1px),linear-gradient(90deg, rgba(22,115,201,.055) 1px, transparent 1px); background-size:42px 42px; color:#152238; line-height:1.7; scroll-behavior:smooth; animation:gridShift 22s linear infinite; }
+    html { overflow-x: hidden; }
+     a { color: inherit; }
+     img { max-width: 100%; height: auto; display: block; }
+    a, button, .project { -webkit-tap-highlight-color: transparent; }
+    a:focus-visible, button:focus-visible, .project:focus-visible { outline:3px solid #ffb900; outline-offset:3px; }
+    @keyframes gridShift { from { background-position:0 0, 0 0; } to { background-position:42px 42px, 42px 42px; } }
+
+     /* typography scaling */
+     h1 { font-size: clamp(1.5rem, 4.5vw, 2.75rem); }
+     .intro h1 { font-size: clamp(1.6rem, 6vw, 2.75rem); line-height:1.05; }
+     .intro h2 { font-size: clamp(1rem, 2.5vw, 1.125rem); }
+    p.lead, .intro p { font-size:clamp(.95rem, 2.2vw, 1rem); color:#425466; }
+
+     /* Header / Navigation */
+    header { position:sticky; top:0; z-index:1200; display:flex; align-items:center; justify-content:space-between; padding:14px 28px; background:rgba(255,255,255,.9); backdrop-filter:blur(14px); border-bottom:1px solid #dfe6ef; }
+     .brand { display:flex; align-items:center; gap:12px; }
+    .brand .logo { width:46px; height:46px; border-radius:8px; background:#1673c9; display:grid; place-items:center; font-weight:700; color:#fff; box-shadow:0 0 0 4px rgba(22,115,201,.15); }
+     nav ul { list-style:none; display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+    nav a { text-decoration:none; color:#26364d; font-weight:600; padding:8px 10px; border-radius:6px; transition:all .18s ease; font-size:.95rem; }
+    nav a:hover, nav a.active { color:#fff; background:#1673c9; box-shadow:0 6px 18px rgba(0,0,0,.16); transform:translateY(-1px); }
+     .controls { display:flex; gap:10px; align-items:center; }
+    .cta { background:#1673c9; padding:8px 12px; border-radius:6px; color:#fff; font-weight:700; text-decoration:none; font-size:.95rem; box-shadow:0 6px 16px rgba(22,115,201,.18); }
+    .menu-toggle { display:none; background:transparent; color:#152238; border:1px solid #cbd6e2; border-radius:6px; width:40px; height:38px; cursor:pointer; font-size:1.3rem; }
+
+     /* Sections base */
+     main { max-width:1200px; margin: 90px auto 40px; padding: 0 18px; }
+     section { margin-bottom: 38px; padding: 22px; border-radius: 12px; transition: all .28s ease; opacity:0; transform: translateY(8px); }
+    .card { background:rgba(255,255,255,.94); padding:14px; border-radius:8px; border:1px solid #e0e7ef; box-shadow:0 12px 34px rgba(33,55,80,.08); }
+    .card p, .skill p, .service-card p, .project p { color:#425466 !important; }
+    .intro h1 { color:#1673c9 !important; }
+    .intro h1 span { color:#152238 !important; }
+
+    h2.section-title { font-size:1.25rem; color:#075eaa; margin-bottom:12px; letter-spacing:.01em; }
+
+     /* Hero / Intro */
+     .hero { display:grid; grid-template-columns: 1fr 360px; gap:28px; align-items:center; }
+     .hero .intro { padding-right: 6px; }
+     .intro h1 { text-shadow: 0 4px 18px rgba(0,195,255,0.03); margin-bottom:8px; }
+     .intro p { max-width:640px; }
+    .hero .photo { width:100%; max-width:360px; aspect-ratio:1; border-radius:50%; position:relative; display:grid; place-items:center; margin-left:auto; padding:20px; background:#e8f2fc; border:1px solid #cfe3f7; }
+    .photo .ring { position:absolute; inset:0; border-radius:50%; box-shadow:0 0 0 1px rgba(22,115,201,.3), 0 0 40px 8px rgba(22,115,201,.16), inset 0 0 18px rgba(22,115,201,.1); animation:pulse 4s ease-in-out infinite; }
+    .photo img { width:100%; height:100%; border-radius:50%; object-fit:cover; box-shadow:0 18px 50px rgba(22,115,201,.18); z-index:2; border:8px solid #fff; }
+     @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+
+     .hero .buttons { margin-top:14px; display:flex; gap:10px; flex-wrap:wrap; }
+     .btn { padding:10px 14px; border-radius:10px; border:none; cursor:pointer; font-weight:700; }
+    .btn.primary { background:#1673c9; color:#fff; }
+    .btn.ghost { background:#fff; color:#152238; border:1px solid #cbd6e2; }
+
+     /* Grids */
+     .skills-grid { display:grid; grid-template-columns: repeat(4,1fr); gap:12px; }
+    .skill { padding:12px; border-radius:8px; background:#fff; border:1px solid #e0e7ef; transition:transform .22s ease, box-shadow .22s ease; }
+    .skill:hover { transform:translateY(-3px); box-shadow:0 12px 24px rgba(33,55,80,.1); }
+
+     .portfolio-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:14px; }
+    .project { padding:12px; border-radius:8px; background:#fff; border:1px solid #e0e7ef; cursor:pointer; transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease; }
+    .project h4 { color:#152238; }
+    .project[onclick]::after { content:'View details  →'; display:block; margin-top:8px; color:#1673c9; font-size:.78rem; font-weight:700; }
+     .project:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(2,6,23,0.32); }
+     .project:active { transform:translateY(-1px); }
+
+     .modal-backdrop{ position:fixed; inset:0; background:rgba(2,6,23,0.72); display:none; align-items:center; justify-content:center; z-index:2000; }
+     .modal { background:#071428; padding:18px; border-radius:12px; width:92%; max-width:880px; box-shadow: 0 40px 120px rgba(0,0,0,0.6); }
+     .modal-body { margin-top:12px; display:grid; grid-template-columns: 1fr 300px; gap:12px; }
+
+     /* Contact & Footer */
+     .contact-form { max-width:680px; margin:auto; display:grid; gap:10px; }
+    .contact-form input, .contact-form textarea { padding:12px; border-radius:8px; border:1px solid #cbd6e2; background:#fff; color:#152238; }
+    .contact-form input:focus, .contact-form textarea:focus { outline:2px solid #1673c9; outline-offset:2px; border-color:#1673c9; }
+    .form-status { min-height:24px; color:#9fcbe6; }
+    .form-status.success { color:#83f2b0; }
+    .form-status.error { color:#ff9e9e; }
+     .footer { padding:28px 18px; text-align:center; background: linear-gradient(180deg, rgba(2,6,23,0.85), rgba(2,6,23,0.95)); margin-top:28px; border-top:1px solid rgba(255,255,255,0.02); }
+
+     /* small interaction */
+     .project-link:active { color: #66b2ff; }
+
+     /* Responsive adjustments */
+     @media (max-width: 980px) {
+      .hero { grid-template-columns: 1fr; gap:18px; }
+      .modal-body { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: repeat(2,1fr); }
+      .services-grid { grid-template-columns: repeat(2,1fr); }
+      main { margin: 80px auto 30px; }
+     }
+
+     @media (max-width: 520px) {
+      header { padding:10px 12px; gap:8px; }
+      .brand { gap:8px; min-width:0; }
+      .brand .logo { width:38px; height:38px; font-size:.72rem; }
+      .brand > div:last-child > div:first-child { font-size:.72rem !important; color:#152238 !important; white-space:nowrap; }
+      .brand > div:last-child > div:last-child { font-size:1rem !important; color:#1673c9 !important; line-height:1.1; }
+      nav { position:absolute; top:100%; left:12px; right:12px; }
+      nav ul { display:none; flex-direction:column; align-items:stretch; gap:4px; padding:10px; background:#fff; border:1px solid #dfe6ef; border-radius:0 0 8px 8px; box-shadow:0 18px 30px rgba(33,55,80,.18); }
+      nav ul.menu-open { display:flex; }
+      nav a { display:block; padding:10px 12px; }
+      .menu-toggle { display:block; }
+      .controls { min-width:0; }
+      .cta { white-space:nowrap; }
+      main { margin:30px auto 24px; padding:0 10px; }
+      .skills-grid { grid-template-columns:1fr; }
+      .services-grid, .testimonials { grid-template-columns:1fr !important; }
+      .services-grid > *, .testimonials > * { min-width:0; }
+      .hero { grid-template-columns:1fr; gap:20px; }
+      .hero .photo { display:block; max-width:190px; margin:0 auto; padding:12px; order:-1; }
+      .intro h1 { font-size:clamp(1.55rem, 8vw, 2rem); line-height:1.12; }
+      .intro h2 { line-height:1.35; }
+      .intro p { line-height:1.65; }
+      section { padding:18px 14px; margin-bottom:18px; }
+      .card { padding:12px; }
+      .controls { gap:5px; }
+      .cta { padding:7px 8px; font-size:.78rem; }
+      .contact-form input, .contact-form textarea { width:100%; }
+      .hero .intro > div:last-child > div { background:#f3f7fb !important; border:1px solid #e0e7ef; color:#425466; font-size:.8rem; overflow-wrap:anywhere; }
+      .hero-actions, .hero .intro > div:last-child { flex-direction:column; align-items:stretch !important; }
+      .hero-actions .btn { width:100%; }
+      #about > div { grid-template-columns:1fr !important; }
+      #contact > div:last-child { display:grid !important; grid-template-columns:1fr; }
+      #contact > div:last-child .card { min-width:0 !important; }
+      .footer > div > div:first-child { display:block !important; }
+      .footer > div > div:first-child > div { min-width:0 !important; margin-bottom:18px; }
+      .footer input { min-width:0; width:100%; }
+      .footer button { flex-shrink:0; }
+      .modal { max-height:90vh; overflow:auto; }
+     }
+
+    </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">RAVI</div>
+      <div>
+        <div style="font-weight:700; color:lch(30.97% 106.44 309.15);">RAVI KUMAR</div>
+        <div style="font-size:40px; color:#370cf7;"><b>Portfolio</b></div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <nav>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#timeline">Journey</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" onclick="toggleMenu()">☰</button>
+      <a class="cta" href="#contact">Hire / Contact</a>
+      <button class="btn ghost toggle-btn" onclick="toggleDarkMode()">🌙</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section id="home" class="card">
+      <div class="hero">
+        <div class="intro">
+          <h1 style="color: #4eaf15;">Hi — I'm <span style="color:#e7e0dc">RAVI KUMAR</span></h1>
+          <h2 class="subtitle">I design and build accessible, fast, and beautiful web experiences.</h2>
+          <p class="lead">I specialize in front-end engineering using semantic HTML, modern CSS, and JavaScript. My focus is on delivering user-friendly interfaces with performance and accessibility in mind. Below you will find detailed sections about my skills, services, projects, case studies, and how to contact me.</p>
+
+          <div class="hero-actions">
+            <button class="btn primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Hire Me</button>
+            <button class="btn ghost" onclick="document.getElementById('portfolio').scrollIntoView({behavior:'smooth'})">See Portfolio</button>
+          </div>
+
+          <div style="margin-top:18px; display:flex; gap:12px; align-items:center;">
+            <div style="background:rgba(255,255,255,0.03);padding:10px 14px;border-radius:10px;">📧 ravikrsingho68068@gmail.com</div>
+            <div style="background:rgba(255,255,255,0.03);padding:10px 14px;border-radius:10px;">📍 BUXAR, BIHAR</div>
+          </div>
+
+        </div>
+
+        <div class="photo card">
+          <div class="ring"></div>
+          <img src="https://avatars.githubusercontent.com/u/204120956?v=4" alt="Ravi Kumar">
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="card">
+      <h2 class="section-title">About Me</h2>
+      <p>I AM BCA STUDENT. I enjoy turning complex problems into simple, beautiful user experiences. I write clean, accessible code and make sure designs translate well into production.</p>
+
+      <p>My core values: <strong>Quality</strong>, <strong>Readability</strong>, <strong>Performance</strong>, and <strong>Accessibility</strong>. I am open to freelance, internships, and full-time opportunities.</p>
+
+      <div style="margin-top:18px; display:grid; grid-template-columns: repeat(2,1fr); gap:12px;">
+        <div class="card">
+          <h4 style="color: #df178c; font-size: 20px;"><b>Education</b></h4>
+          <p>Bachelor of Computer Applications(BCA) — Expected 2023</p>
+          <p>Relevant coursework: Data Structures, Algorithms, DBMS, Operating Systems, Web Technologies</p>
+        </div>
+        <div class="card">
+          <h4 style="color: #bd7210; font-size: 20px;">Tools & Workflow</h4>
+          <p>VS Code • Git & GitHub • Chrome • MYSQL, DEVC++</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="card">
+      <h2 class="section-title">Skills & Expertise</h2>
+      <div class="skills-grid">
+        <div class="skill">
+          <h4>HTML & Accessibility</h4>
+          <p style="color: WHITE;">Semantic HTML5, forms, ARIA, keyboard navigation and screen reader friendly markup.</p>
+        </div>
+        <div class="skill">
+          <h4>CSS & Layout</h4>
+          <p>CSS Grid, Flexbox, responsive patterns, CSS variables, animations and transitions.</p>
+        </div>
+        <div class="skill">
+          <h4>JavaScript</h4>
+          <p>Vanilla JS, ES6+, DOM APIs, async/await, fetch and small stateful widgets.</p>
+        </div>
+        <div class="skill">
+          <h4>React & Component Design</h4>
+          <p>Component composition, props/state patterns, hooks basics and small SPA work.</p>
+        </div>
+        <div class="skill">
+          <h4>Backend Basics</h4>
+          <p>Node.js, Express fundamentals, REST APIs, handling JSON and simple data storage.</p>
+        </div>
+        <div class="skill">
+          <h4>Databases</h4>
+          <p>MySQL basics, schema design and simple queries.</p>
+        </div>
+        <div class="skill">
+          <h4>Testing & Performance</h4>
+          <p>Manual testing, Lighthouse audits, image optimization and lazy-loading strategies.</p>
+        </div>
+        <div class="skill">
+          <h4>Soft Skills</h4>
+          <p>Clear communication, documentation, agile workflows and continuous learning.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:18px;">
+        <h4>Basic Competency Table</h4>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;">
+          <div class="card" style="flex:1;min-width:200px;"><strong>HTML5</strong><div>Advanced</div></div>
+          <div class="card" style="flex:1;min-width:200px;"><strong>CSS3</strong><div>Advanced</div></div>
+          <div class="card" style="flex:1;min-width:200px;"><strong>JavaScript</strong><div>Intermediate / Advanced</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="card">
+      <h2 class="section-title">Services I Offer</h2>
+      <div class="services-grid">
+        <div class="card service-card">
+          <h4>Website Development</h4>
+          <p>Full creation of responsive, accessible websites from design to deployment.</p>
+        </div>
+        <div class="card service-card">
+          <h4>UI/UX & Prototyping</h4>
+          <p>Designing the user flows, interactive prototypes, and visual polish.</p>
+        </div>
+        <div class="card service-card">
+          <h4>Performance Optimization</h4>
+          <p>Improve load times, optimize media, reduce render-blocking resources.</p>
+        </div>
+        <div class="card service-card">
+          <h4>Accessibility Audits</h4>
+          <p>Manual and automated accessibility checks and remediation steps.</p>
+        </div>
+        <div class="card service-card">
+          <h4>Maintenance & Support</h4>
+          <p>Ongoing updates, bug fixes and small feature additions.</p>
+        </div>
+        <div class="card service-card">
+          <h4>Consulting</h4>
+          <p>Code reviews, architecture suggestions and mentoring.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO + CASE STUDIES (many items added) -->
+    <section id="portfolio" class="card">
+      <h2 class="section-title">Selected Projects & Case Studies</h2>
+      <p class="lead">Below are several projects and short case-study summaries showing the problem, solution, and impact. Click a project to open a detailed modal with screenshots, tech used, and notes.</p>
+
+      <div class="portfolio-grid" style="margin-top:18px;">
+        <!-- repeat many project cards to increase length and show variety -->
+        <div class="project" onclick="openModalDetailed(1)">
+          <h4>Typing Speed Trainer</h4>
+          <p>Interactive typing practice app with WPM, accuracy, and local high scores.</p>
+        </div>
+        <div class="project" onclick="openModalDetailed(2)">
+          <h4>MMDU</h4>
+          <p>Maharishi Markandeshwar (Deemed to be University)mullana Ambala visiting university </p>
+        </div>
+        <div class="project" onclick="openModalDetailed(3)">
+          <h4>Portfolio Template</h4>
+          <p>One-page portfolio with animated hero and contact integration.</p>
+        </div>
+        <div class="project" onclick="openModalDetailed(4)">
+          <h4>Weather Dashboard</h4>
+          <p>Real-time weather data with API integration and local caching.</p>
+        </div>
+        <div class="project" onclick="openModalDetailed(5)">
+          <h4>Calculator UI</h4>
+          <p>Modern calculator with keyboard support and responsive layout.</p>
+        </div>
+        <div class="project" onclick="openModalDetailed(6)">
+          <h4>E-commerce Landing</h4>
+          <p>Product showcase and CTA with payment simulation.</p>
+        </div>
+        <div class="project" onclick="openModalDetailed(7)">
+          <h4>Blog System (Static)</h4>
+          <p>Static blog template with category filters and search.</p>
+        </div>
+        <div class="project" onclick="openModalDetailed(8)">
+          <h4>Quiz App</h4>
+          <p>Timed quizzes with score tracking and review pages.</p>
+        </div>
+        <div class="project" onclick="openModalDetailed(9)">
+          <h4>Image Gallery</h4>
+          <p>Lazy-loading images and lightbox modal for high-resolution photos.</p>
+        </div>
+        <div class="project" onclick="openModalDetailed(10)">
+          <h4>Task Manager</h4>
+          <p>Simple todo app with local storage and drag-and-drop ordering.</p>
+        </div>
+        <div class="project" onclick="openModalDetailed(11)">
+          <h4>Chat UI Prototype</h4>
+          <p>Minimal chat interface for messaging experiences.</p>
+        </div>
+        <div class="project" onclick="openModalDetailed(12)">
+          <h4>Landing Page Animations</h4>
+          <p>Hero animation sequences and smooth scroll interactions.</p>
+        </div>
+        <div class="project" onclick="openModalDetailed(13)">
+          <h4>Resume Builder</h4>
+          <p>Small app to compose, preview and export resumes as PDF.</p>
+        </div>
+        <div class="project" onclick="openModalDetailed(14)">
+          <h4>Expense Tracker</h4>
+          <p>Track income & expenses with charts and filters.</p>
+        </div>
+        <div class="project" onclick="openModalDetailed(15)">
+          <h4>Music Player UI</h4>
+          <p>Custom audio player with playlist support and animations.</p>
+        </div>
+        <div class="project" onclick="openModalDetailed(16)">
+          <h4>Markdown Editor</h4>
+          <p>Live preview markdown editor with download feature.</p>
+        </div>
+        <div class="project" onclick="openModalDetailed(17)">
+          <h4>Form Validation Library</h4>
+          <p>Reusable validation helpers for forms and inputs.</p>
+        </div>
+        <div class="project" onclick="openModalDetailed(18)">
+          <h4>Image Compressor</h4>
+          <p>Client-side image compression using canvas for faster uploads.</p>
+        </div>
+        <div class="project" onclick="openModalDetailed(19)">
+          <h4>Interactive Charts</h4>
+          <p>Data visualizations with accessible legends and tooltips.</p>
+        </div>
+        <div class="project" onclick="openModalDetailed(20)">
+          <h4>Travel Itinerary Planner</h4>
+          <p>Plan, save and export trip plans with local storage.</p>
+        </div>
+      </div>
+
+      <!-- LONG CASE-STUDY EXAMPLE (expanded to add lines) -->
+      <div style="margin-top:24px;">
+        <h4 style="color: #008cff; font-size: 20px;"><a href="https://raviraj21r.github.io/Project-/" target="_blank" style="text-decoration: none;">Typing Speed Trainer</a></h4>
+        <p><strong>Problem:</strong> Many typing practice sites are heavy, slow, or require frameworks; users wanted a lightweight offline-friendly solution.</p>
+        <p><strong>Approach:</strong> Built as a single HTML file with CSS and vanilla JS. Implemented efficient event handling to measure keystrokes, calculate WPM, accuracy and highlight mistakes in real-time. Used localStorage for persistent high-scores.</p>
+        <p><strong>Implementation details:</strong> Key features include: randomized text sets, adjustable durations (15/30/60s), live WPM/accuracy calculations, pause/resume, and accessible focus management so keyboard-only users can use it. The UI adapts to mobile screens and reduces unnecessary paint operations to improve battery life.</p>
+        <p><strong>Impact:</strong> Fast loading (<1s on slow networks), easy to host on GitHub Pages, and useful for students learning touch-typing. The app achieved an internal user satisfaction rating of 4.6/5 in informal tests.</p>
+      </div>
+
+      <!-- another expanded case study -->
+      <div style="margin-top:18px;">
+        <h3 style="color: #0077cc;"><a href="https://www.mmumullana.org/"  target="_blank" style="text-decoration: none;">Case Study: MMDU Landing</a></h3>
+        <p><strong>Goal:</strong> Build a complete, content-driven landing site that editors can update easily and which performs well under heavy traffic.</p>
+        <p><strong>Strategy:</strong> Focus on semantic sections, server-ready HTML structure, lazy images, and minimal JS. Create reusable components (cards, modals, event lists) and provide clear CSS variables for theming.</p>
+        <p><strong>Outcome:</strong> The landing page template was accepted by multiple departments and was reused for event pages, saving design/development time.</p>
+      </div>
+
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="card">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <div class="faq-list">
+        <div class="faq-item card">
+          <details>
+            <summary>What technologies do you work with?</summary>
+            <div style="margin-top:8px;">I work mainly with HTML, CSS, JavaScript (ES6+), React, Node.js basics, and databases like MySQL. I also use tools like Git, VS Code, Chrome DevTools, Figma for design handoffs, and Netlify / Vercel for deployments.</div>
+          </details>
+        </div>
+        <div class="faq-item card">
+          <details>
+            <summary>Can you help with hiring projects or internships?</summary>
+            <div style="margin-top:8px;">Yes — I mentor students and sometimes take small internship projects. I am open to collaboration with universities and small companies for guided work.</div>
+          </details>
+        </div>
+        <div class="faq-item card">
+          <details>
+            <summary>How do you price your projects?</summary>
+            <div style="margin-top:8px;">Pricing depends on scope. Typical ranges: landing page (₹5k–15k), multi-page website (₹15k–50k), web app features estimated per sprint. I provide a simple quote after initial discovery.</div>
+          </details>
+        </div>
+        <div class="faq-item card">
+          <details>
+            <summary>Do you provide documentation and handoff?</summary>
+            <div style="margin-top:8px;">Yes. Every project includes a README, deployment notes, and guidance for future maintainers. Optionally I can provide short walkthrough sessions.</div>
+          </details>
+        </div>
+        <div class="faq-item card">
+          <details>
+            <summary>What is your turnaround time?</summary>
+            <div style="margin-top:8px;">Small tasks: 1–3 days. Landing pages: 1–2 weeks. Web apps: depends on complexity; usually planned in sprints.</div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section id="testimonials" class="card">
+      <h2 class="section-title">Testimonials</h2>
+      <div class="testimonials">
+        <div class="quote card">“Ravi built our landing page quickly and with attention to detail. He also helped improve accessibility.” — Product Manager</div>
+        <div class="quote card">“Easy to work with, communicated clearly, and delivered on time.” — Startup Founder</div>
+        <div class="quote card">“Excellent UI work and clean code. Our QA team was impressed.” — Engineering Lead</div>
+      </div>
+    </section>
+
+    <!-- TIMELINE / JOURNEY -->
+    <section id="timeline" class="card">
+      <h2 class="section-title">My Journey</h2>
+      <ul class="timeline-list">
+        <li><strong>2019:</strong> Began programming with C / C++ and basic algorithms.</li>
+        <li><strong>2020:</strong> First web projects using HTML/CSS and small JS widgets.</li>
+        <li><strong>2021:</strong> Participated in hackathons; built portfolio projects.</li>
+        <li><strong>2022:</strong> Learned React and started integrating APIs.</li>
+        <li><strong>2023:</strong> Freelance work and mentorship for juniors.</li>
+        <li><strong>2024:</strong> Focus on advanced frontend techniques and optimization.</li>
+      </ul>
+    </section>
+
+    <!-- DEEPER PROJECT LIST (bulk entries to increase lines for demo) -->
+    <section class="card">
+      <h2 class="section-title">Other Projects (demos & small utilities)</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
+        <!-- a long list of short project tiles to pad length and show experience -->
+        <div class="project card">Local Weather Widget — small API demo</div>
+        <div class="project card">Countdown Timer — JS timer with notifications</div>
+        <div class="project card">Notes App — save & edit notes (localStorage)</div>
+        <div class="project card">Color Palette Generator — tools for designers</div>
+        <div class="project card">SVG Icon Set — optimized sprite + accessibility</div>
+        <div class="project card">Form Wizard — multi-step form UX</div>
+        <div class="project card">CSV Importer — parse & preview CSV data</div>
+        <div class="project card">Image Cropper — client-side image editing</div>
+        <div class="project card">PDF Export Utility — export page to PDF</div>
+        <div class="project card">Simple CMS mock — JSON-driven pages</div>
+        <div class="project card">Progress Tracker — habit tracker UI</div>
+        <div class="project card">Markdown Notes — live preview editor</div>
+        <div class="project card">Recipe Finder — search & filter demo</div>
+        <div class="project card">Accessibility Checklist — small audit tool</div>
+        <div class="project card">Local Storage Cleaner — tiny utility</div>
+        <div class="project card">SVG Animation Demo — timeline-based</div>
+        <div class="project card">Debounce/Throttle Demo — input optimization</div>
+        <div class="project card">Keyboard Shortcuts — enhance productivity</div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="card">
+      <h2 class="section-title">Contact & Hire</h2>
+      <p class="lead">If you like my work and want to collaborate, please reach out. I normally respond within 24–48 hours on business days.</p>
+
+      <form class="contact-form" onsubmit="handleContact(event)">
+        <input id="c-name" name="name" type="text" placeholder="Your name" maxlength="80" autocomplete="name" required />
+        <input id="c-email" name="email" type="email" placeholder="Your email" maxlength="160" autocomplete="email" required />
+        <input id="c-subject" name="subject" type="text" placeholder="Subject (Project / Job)" maxlength="160" />
+        <textarea id="c-message" name="message" rows="6" maxlength="4000" placeholder="Describe your project or message" required></textarea>
+        <p id="contact-status" class="form-status" role="status" aria-live="polite"></p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn primary" type="submit">Send Message</button>
+          <button class="btn ghost" type="button" onclick="resetContact()">Reset</button>
+        </div>
+      </form>
+
+      <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap;">
+        <div class="card">
+          <strong style="color: #09a2fa; font-size: 40px;">Email</strong>
+          <div style="margin-top:6px; color:#f1f4f7;"><b>ravikrsingho68068@gmail.com</b></div>
+        </div>
+        <div class="card">
+          <strong style="color: #09a2fa; font-size: 40px;">LinkedIn</strong>
+          <div style="margin-top:6px;"><a href="https://linkedin.com/in/ravi-kumar-2b3284358" target="_blank" style="text-decoration: none;">linkedin.com/in/ravi-kumar-2b3284358</a></div>
+        </div>
+        <div class="card">
+          <strong style="color: #09a2fa; font-size: 40px;">GitHub</strong>
+          <div style="margin-top:6px;"><a href="https://github.com/Raviraj21r" target="_blank" style="text-decoration: none;">github.com/raviraj21a</a></div>
+        </div>
+        <div class="card">
+          <strong style="color: #09a2fa; font-size: 40px;">YouTube</strong>
+          <div style="margin-top: 60px;"><a href="https://youtube.com/@inspirecodemaster?si=wCPCayOEDJwGuA8P" target="_blank" style="text-decoration: none;">Youtube Channel</a></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div style="max-width:1100px;margin:0 auto;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:220px;">
+          <h3>Ravi Raj</h3>
+          <p style="color:#9fcbe6;">Frontend Developer & Software Engineer — crafting accessible, performant, and beautiful web experiences. Available for freelance & full-time roles.</p>
+        </div>
+
+        <div style="flex:1;min-width:220px;">
+          <h4 style="color:#bff5ff;">Quick Links</h4>
+          <div class="links">
+            <a href="#about">About</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </div>
+
+        <div style="flex:1;min-width:220px;">
+          <h4 style="color:#bff5ff;">Subscribe</h4>
+          <p style="color:#9fcbe6;">Get updates when I publish a new project or blog.</p>
+          <div style="margin-top:8px; display:flex; gap:8px;">
+            <input id="newsletter-email" type="email" placeholder="Enter your email" style="padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.05);background:transparent;color:#eaf6ff;" />
+            <button onclick="subscribeNews()" style="padding:8px 12px;border-radius:8px;border:none;background:#00eaff;color:#042a33;font-weight:700;">Subscribe</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:18px;display:flex;justify-content:center;gap:12px;align-items:center;flex-wrap:wrap;">
+        <a class="social" href="https://github.com/raviraj21a" target="_blank" title="GitHub"><i class="fab fa-github fa-2x"></i></a>
+        <a class="social" href="https://linkedin.com/in/ravi-kumar-2b3284358" target="_blank" title="LinkedIn"><i class="fab fa-linkedin fa-2x"></i></a>
+        <a class="social" href="mailto:ravikrsingho68068@gmail.com" title="Email"><i class="fas fa-envelope fa-2x"></i></a>
+        <a class="social" href="https://instagram.com/mrraviraj9297" target="_blank" title="Instagram"><i class="fab fa-instagram fa-2x"></i></a>
+      </div>
+
+      <div style="margin-top:18px;color:#9fcbe6;">© 2025 Ravi Kumar• Built with HTML, CSS & JavaScript • <a href="#" style="color:#bff5ff;">Privacy</a> • <a href="#" style="color:#bff5ff;">Terms</a> • <a href="#" style="color:#bff5ff;">Sitemap</a></div>
+    </div>
+  </footer>
+
+  <!-- Modal Backdrop -->
+  <div id="modal-backdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" role="document">
+      <div class="modal-header">
+        <h3 id="modal-title">Project Details</h3>
+        <button onclick="closeDetailedModal()" aria-label="Close" style="background:transparent;border:none;color:#c9f0ff;font-weight:700;font-size:18px;">✕</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <p id="modal-text" style="color:#cfeeff;">Detailed project description will appear here.</p>
+          <div class="tags" id="modal-tags"></div>
+        </div>
+        <div>
+          <div class="screenshot">Screenshot / Demo</div>
+          <div style="margin-top:12px;color:#9fb3c8;font-size:13px;">Tech stack, live link and repo information appear here.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== Utility: Make sections visible on scroll =====
+    const sections = document.querySelectorAll('section');
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.style.opacity = 1;
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, {threshold: 0.15});
+    sections.forEach(s => observer.observe(s));
+
+    // ===== Dark mode toggle =====
+    function toggleDarkMode(){ document.body.classList.toggle('dark-mode'); }
+
+    function toggleMenu(){
+      const menu = document.querySelector('nav ul');
+      const button = document.querySelector('.menu-toggle');
+      const isOpen = menu.classList.toggle('menu-open');
+      button.setAttribute('aria-expanded', String(isOpen));
+      button.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+    }
+
+    // ===== Contact form handling =====
+    async function handleContact(e){
+      e.preventDefault();
+      const form = e.currentTarget;
+      const status = document.getElementById('contact-status');
+      const submitButton = form.querySelector('button[type="submit"]');
+      status.className = 'form-status';
+      status.textContent = 'Sending your message...';
+      submitButton.disabled = true;
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(Object.fromEntries(new FormData(form)))
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || 'Message could not be sent.');
+        status.className = 'form-status success';
+        status.textContent = 'Thanks! Your message has been received. I will reply soon.';
+        form.reset();
+      } catch (error) {
+        status.className = 'form-status error';
+        status.textContent = error.message || 'Network error. Please try again.';
+      } finally {
+        submitButton.disabled = false;
+      }
+    }
+    function resetContact(){ document.querySelector('.contact-form').reset(); document.getElementById('contact-status').textContent=''; }
+
+    // ===== Newsletter subscribe demo =====
+    function subscribeNews(){
+      const el = document.getElementById('newsletter-email');
+      const email = el.value.trim();
+      if(!email){ alert('Enter email to subscribe'); return; }
+      const list = JSON.parse(localStorage.getItem('rj_news')||'[]');
+      list.push({email, date:new Date().toISOString()});
+      localStorage.setItem('rj_news', JSON.stringify(list));
+      el.value='';
+      alert('Subscribed! (demo)');
+    }
+
+    // ===== Modal logic for project details (many dummy entries) =====
+    const modal = document.getElementById('modal-backdrop');
+    const modalText = document.getElementById('modal-text');
+    const modalTags = document.getElementById('modal-tags');
+    const modalTitle = document.getElementById('modal-title');
+
+    const PROJECTS = {
+      1: { title:'Typing Speed Trainer', text:'Lightweight typing trainer with WPM/accuracy, local highscores, multiple difficulty levels and mobile-friendly UI. Built using semantic HTML, CSS and efficient vanilla JavaScript. No external libs.', tags:['HTML','CSS','JS','localStorage'] },
+      2: { title:'MM University Landing', text:'A full landing site template with news, events, programs and modal login. Focused on content layout, accessibility and reusability. Uses CSS Grid for layout and cards for content.', tags:['HTML','CSS','Accessibility'] },
+      3: { title:'Portfolio Template', text:'One-page portfolio with hero, skills grid, projects and contact form. Dark mode and smooth scroll included. Clean, modular CSS for easy theming.', tags:['HTML','CSS','JS'] },
+      4: { title:'Weather Dashboard', text:'Fetches live weather using a public API, includes caching to reduce calls and responsive charts for forecast data.', tags:['API','JS','UX'] },
+      5: { title:'Calculator UI', text:'Responsive calculator supporting keyboard and touch interactions with clear focus states and accessible labeling.', tags:['JS','UX'] },
+      6: { title:'E-commerce Landing', text:'Marketing-focused landing page with product highlights, CTA and simulated checkout flow (demo only).', tags:['HTML','CSS','Animations'] },
+      7: { title:'Blog System (Static)', text:'Markdown-driven static blog template with category filters and responsive reading experience.', tags:['HTML','JS'] },
+      8: { title:'Quiz App', text:'Timed quizzes with score tracking and review pages, designed for quick learning sessions.', tags:['JS','UX'] },
+      9: { title:'Image Gallery', text:'Optimized image grid with lazy-loading and lightbox modal for full-size images.', tags:['JS','Performance'] },
+      10: { title:'Task Manager', text:'Local todo manager with drag-and-drop ordering and persistent local storage.', tags:['JS','localStorage'] },
+      11: { title:'Chat UI Prototype', text:'Minimal chat interface for messaging APIs and proof-of-concept integrations.', tags:['UI','Design'] },
+      12: { title:'Landing Animations', text:'Hero sequences and micro-interactions designed to improve engagement and conversions.', tags:['CSS','Animations'] },
+      13: { title:'Resume Builder', text:'Simple resume builder allowing export to PDF via browser APIs and printable templates.', tags:['JS','PDF'] },
+      14: { title:'Expense Tracker', text:'Track income and expenses with charts and CSV export.', tags:['JS','Charts'] },
+      15: { title:'Music Player UI', text:'Custom audio player with playlist controls and accessible keyboard support.', tags:['Audio','JS'] },
+      16: { title:'Markdown Editor', text:'Live-edit markdown with side-by-side preview and file export.', tags:['JS'] },
+      17: { title:'Form Validation', text:'Reusable validation utilities and accessible error messages for forms.', tags:['JS','Accessibility'] },
+      18: { title:'Image Compressor', text:'Client-side image compression using canvas to reduce upload sizes.', tags:['Canvas','Performance'] },
+      19: { title:'Interactive Charts', text:'Accessible charts with tooltips, legends and keyboard navigation.', tags:['Charts','Accessibility'] },
+      20: { title:'Itinerary Planner', text:'Create, save and export travel plans with local storage.', tags:['JS','UX'] }
+    };
+
+    function openModalDetailed(id){
+      const p = PROJECTS[id];
+      if(!p) return;
+      modalTitle.innerText = p.title;
+      modalText.innerText = p.text + '\n\nTech / Tags:';
+      modalTags.innerHTML = '';
+      p.tags.forEach(t => { const el = document.createElement('span'); el.className='tag'; el.innerText = t; modalTags.appendChild(el); });
+      modal.style.display = 'flex';
+      modal.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+    }
+    document.querySelectorAll('.project[onclick]').forEach((project)=>{
+      project.setAttribute('role','button');
+      project.setAttribute('tabindex','0');
+      project.addEventListener('keydown',(event)=>{
+        if(event.key === 'Enter' || event.key === ' '){ event.preventDefault(); project.click(); }
+      });
+    });
+    function closeDetailedModal(){ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); document.body.style.overflow='auto'; }
+
+    // Close modal on ESC
+    window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeDetailedModal(); });
+
+    // Smooth scroll active link highlighting
+    const navLinks = document.querySelectorAll('nav a');
+    const sectionMap = {};
+    navLinks.forEach(a=>{
+      const id = a.getAttribute('href')?.slice(1);
+      if(id){ const el = document.getElementById(id); if(el) sectionMap[id]=el; }
+      a.addEventListener('click', (ev)=>{ ev.preventDefault(); const id = a.getAttribute('href').slice(1); const el = document.getElementById(id); if(el) el.scrollIntoView({behavior:'smooth', block:'start'}); });
+      a.addEventListener('click', ()=>{
+        const menu = document.querySelector('nav ul');
+        const button = document.querySelector('.menu-toggle');
+        menu.classList.remove('menu-open');
+        button.setAttribute('aria-expanded', 'false');
+        button.setAttribute('aria-label', 'Open navigation');
+      });
+    });
+
+    document.addEventListener('click', (event)=>{
+      const nav = document.querySelector('nav');
+      const menu = document.querySelector('nav ul');
+      const button = document.querySelector('.menu-toggle');
+      if(!nav.contains(event.target) && !button.contains(event.target)){
+        menu.classList.remove('menu-open');
+        button.setAttribute('aria-expanded', 'false');
+        button.setAttribute('aria-label', 'Open navigation');
+      }
+    });
+
+    function highlightNav(){
+      const fromTop = window.scrollY + 140;
+      for(const id in sectionMap){
+        const el = sectionMap[id];
+        if(el.offsetTop <= fromTop && (el.offsetTop + el.offsetHeight) > fromTop){
+          document.querySelectorAll('nav a').forEach(n=>n.classList.remove('active'));
+          const link = document.querySelector('nav a[href="#'+id+'"]'); if(link) link.classList.add('active');
+        }
+      }
+    }
+    window.addEventListener('scroll', highlightNav);
+    window.addEventListener('load', ()=>{ highlightNav(); });
+
+    // tiny helper: prefill contact fields if data present
+    (function prefillContact(){
+      const contacts = JSON.parse(localStorage.getItem('rj_contacts')||'[]');
+      if(contacts && contacts.length>0){ document.getElementById('c-name').value = contacts[0].name || ''; }
+    })();
+  </script>
+</body>
+
+</html>
