@@ -625,7 +625,7 @@ contactForm.addEventListener('submit', async (event) => {
   formStatus.className = 'form-status';
   formStatus.textContent = 'Sending your message...';
   try {
-    const response = await fetch('/api/contact', {
+    const response = await fetch('https://my-portfolio-unrz.onrender.com', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(Object.fromEntries(new FormData(contactForm)))
