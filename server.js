@@ -3,7 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 import { mkdir, readFile, appendFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -14,17 +14,8 @@ const port = Number(process.env.PORT) || 3000;
 const publicDirectory = path.join(__dirname, 'public');
 const dataDirectory = path.join(__dirname, 'portfolio-data');
 const messagesFile = path.join(dataDirectory, 'messages.ndjson');
-const smtpRequired = ['SMTP_HOST', 'SMTP_USER', 'SMTP_PASS', 'CONTACT_RECEIVER_EMAIL'];
-const smtpConfigured = smtpRequired.every((key) => Boolean(process.env[key]));
-const transporter = smtpConfigured ? nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT) || 465,
-  secure: process.env.SMTP_SECURE !== 'false',
-  auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
-  connectionTimeout: 10000,
-  greetingTimeout: 10000,
-  socketTimeout: 15000
-}) : null;
+
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(cors({ origin: process.env.FRONTEND_ORIGIN || `http://localhost:${port}` }));
@@ -48,19 +39,24 @@ function clean(value, maxLength) {
 }
 
 async function sendNotification(message) {
-  if (!transporter) {
-    console.error('Email not sent: missing SMTP configuration. Required keys:', smtpRequired.join(', '));
+  if (!resend) {
+    console.error('Email not sent: RESEND_API_KEY is missing.');
     return false;
   }
 
-  await transporter.sendMail({
-    from: process.env.SMTP_USER,
-    to: process.env.CONTACT_RECEIVER_EMAIL,
-    replyTo: message.email,
-    subject: `Portfolio contact: ${message.subject || 'New message'}`,
-    text: `Name: ${message.name}\nEmail: ${message.email}\nSubject: ${message.subject || 'N/A'}\n\n${message.message}`
-  });
-  return true;
+  try {
+    await resend.emails.send({
+      from: 'Portfolio <onboarding@resend.dev>',
+      to: process.env.CONTACT_RECEIVER_EMAIL || 'ravikrsingho68068@gmail.com',
+      replyTo: message.email,
+      subject: `Portfolio contact: ${message.subject || 'New message'}`,
+      text: `Name: ${message.name}\nEmail: ${message.email}\nSubject: ${message.subject || 'N/A'}\n\n${message.message}`
+    });
+    return true;
+  } catch (error) {
+    console.error('Resend email failed:', error);
+    return false;
+  }
 }
 
 app.post('/api/contact', contactLimiter, async (req, res) => {
@@ -77,26 +73,19 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
   try {
     await mkdir(dataDirectory, { recursive: true });
     await appendFile(messagesFile, `${JSON.stringify(entry)}\n`, 'utf8');
-    let emailSent = false;
-    try {
-      emailSent = await sendNotification(entry);
-    } catch (emailError) {
-      console.error('Contact email notification failed:', {
-        code: emailError.code,
-        command: emailError.command,
-        response: emailError.response,
-        message: emailError.message
-      });
-    }
+    
+    const emailSent = await sendNotification(entry);
+    
     if (!emailSent) {
       return res.status(502).json({
         ok: false,
         saved: true,
         emailSent: false,
-        error: 'Message was saved, but email delivery is not configured or failed. Check server logs.'
+        error: 'Message was saved, but email delivery failed.'
       });
     }
-    console.log(`Contact email sent to ${process.env.CONTACT_RECEIVER_EMAIL}`);
+    
+    console.log(`Contact email sent via Resend!`);
     return res.status(201).json({ ok: true, saved: true, emailSent: true });
   } catch (error) {
     console.error('Contact submission failed:', error);
@@ -104,35 +93,6 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
   }
 });
 
-app.get('/api/messages', async (req, res) => {
-  if (!process.env.ADMIN_TOKEN || req.headers.authorization !== `Bearer ${process.env.ADMIN_TOKEN}`) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
-
-  try {
-    const contents = await readFile(messagesFile, 'utf8').catch(() => '');
-    const messages = contents.trim() ? contents.trim().split('\n').map((line) => JSON.parse(line)).reverse() : [];
-    return res.json(messages);
-  } catch {
-    return res.status(500).json({ error: 'Could not read messages.' });
-  }
-});
-
-app.listen(port, async () => {
+app.listen(port, () => {
   console.log(`Portfolio running at http://localhost:${port}`);
-  if (!transporter) {
-    console.warn('SMTP is not configured. Contact messages will be saved but email notifications cannot be sent.');
-    return;
-  }
-  try {
-    await transporter.verify();
-    console.log(`SMTP connection verified for ${process.env.SMTP_USER}`);
-  } catch (error) {
-    console.error('SMTP connection verification failed:', {
-      code: error.code,
-      command: error.command,
-      response: error.response,
-      message: error.message
-    });
-  }
 });
