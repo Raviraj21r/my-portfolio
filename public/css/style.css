@@ -814,7 +814,7 @@ footer a {
   background: #0b4a79;
 }
 .hero .portrait-frame {
-  width: min(260px, 65vw);
+  width: min(300px, 70vw);
   aspect-ratio: 1;
   padding: 0;
   border: 6px solid #fff;
@@ -1076,8 +1076,8 @@ footer a {
 }
 @media (max-width: 800px) {
   .hero .portrait-frame {
-    width: 130px;
-    height: 130px;
+    width: 160px;
+    height: 160px;
     padding: 0;
     border-width: 4px;
   }
