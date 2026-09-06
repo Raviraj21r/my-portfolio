@@ -18,7 +18,14 @@ const messagesFile = path.join(dataDirectory, 'messages.ndjson');
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 app.use(helmet({ contentSecurityPolicy: false }));
-app.use(cors({ origin: process.env.FRONTEND_ORIGIN || `http://localhost:${port}` }));
+app.use(cors({
+  origin: [
+    'https://my-portfolio-woad-rho-89.vercel.app',
+    'http://localhost:3000'
+  ],
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type']
+}));
 app.use(express.json({ limit: '20kb' }));
 app.use(express.static(publicDirectory));
 
