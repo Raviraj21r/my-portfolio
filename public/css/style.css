@@ -814,10 +814,16 @@ footer a {
   background: #0b4a79;
 }
 .hero .portrait-frame {
-  border-color: #0d5484;
+  width: min(260px, 65vw);
+  aspect-ratio: 1;
+  padding: 0;
+  border: 6px solid #fff;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #fff;
   box-shadow:
-    0 25px 60px rgba(0, 0, 0, 0.35),
-    0 0 0 1px #19c6e8;
+    0 0 22px rgba(25, 198, 232, 0.38),
+    0 10px 22px rgba(0, 0, 0, 0.18);
 }
 .hero .floating-note {
   display: none;
@@ -1051,8 +1057,13 @@ footer a {
   background: transparent;
 }
 .hero .portrait-frame img {
-  box-shadow: none;
+  display: block;
+  width: 100%;
+  height: 100%;
   border: 0;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: 50% 20%;
 }
 .hero .portrait-frame {
   width: min(260px, 65vw);
@@ -1066,8 +1077,11 @@ footer a {
 @media (max-width: 800px) {
   .hero .portrait-frame {
     width: 130px;
-    aspect-ratio: 1;
+    height: 130px;
+    padding: 0;
+    border-width: 4px;
   }
+}
   .hero-copy.is-visible .eyebrow,
   .hero-copy.is-visible h1,
   .hero-copy.is-visible .hero-text,
