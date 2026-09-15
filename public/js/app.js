@@ -201,14 +201,25 @@ function openProjectModal(card) {
   
   const demoLink = document.querySelector('#modal-project-demo');
   const githubLink = document.querySelector('#modal-project-github');
+  const demoIcon = demoLink.querySelector('i');
+  const demoLabel = demoLink.querySelector('#modal-project-demo-label');
   const projectImageFrame = projectModal.querySelector('#modal-project-image-link');
   const demoUrl = card.dataset.projectDemo || '';
+  const isDownloadAction = card.dataset.projectAction === 'download';
   let projectImage = projectImageFrame.querySelector('#modal-project-image');
   projectImageFrame.querySelector('.project-modal-artwork')?.remove();
   
   demoLink.href = demoUrl || '#';
+  if (isDownloadAction) {
+    demoLink.setAttribute('download', '');
+  } else {
+    demoLink.removeAttribute('download');
+  }
+  demoIcon.className = isDownloadAction ? 'fa-solid fa-file-arrow-down' : 'fa-solid fa-external-link-alt';
+  demoLabel.textContent = isDownloadAction ? 'Download Notes' : 'Live Demo';
   githubLink.href = card.dataset.projectGithub || '#';
   projectImageFrame.href = demoUrl || '#';
+  projectImageFrame.classList.toggle('is-download', isDownloadAction);
   projectImageFrame.classList.toggle('is-disabled', !demoUrl);
   projectImageFrame.setAttribute('aria-label', demoUrl ? `Open ${card.dataset.projectTitle || 'project'} live demo` : 'Project preview');
   

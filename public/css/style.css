@@ -2056,6 +2056,9 @@ section[id] {
   transform: translateY(5px);
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
+.project-modal-image.is-download::after {
+  content: "Open notes store ↗";
+}
 .project-modal-image:hover::after,
 .project-modal-image:focus-visible::after {
   opacity: 1;
