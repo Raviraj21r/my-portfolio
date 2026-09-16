@@ -2028,8 +2028,8 @@ section[id] {
 .project-modal-body {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  padding: 32px;
+  gap: 22px;
+  padding: 22px;
 }
 .project-modal-image {
   position: relative;
@@ -2096,34 +2096,36 @@ section[id] {
 .project-modal-details {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
 }
 .project-modal-details h2 {
   margin: 0;
-  font: 700 2rem "Space Grotesk";
+  font: 700 1.45rem "Space Grotesk";
   color: #132238;
 }
 .project-modal-section h3 {
-  margin: 0 0 8px;
-  font: 600 1rem "Space Grotesk";
+  margin: 0 0 3px;
+  font: 600 0.86rem "Space Grotesk";
   color: #132238;
 }
 .project-modal-section p {
   margin: 0;
   color: #68788d;
-  line-height: 1.6;
-  font-size: 0.95rem;
+  line-height: 1.28;
+  font-size: 0.78rem;
 }
 .project-modal-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 8px;
+  gap: 8px;
+  margin-top: 2px;
 }
 .project-modal-links .button {
   flex: 1;
   min-width: 120px;
   justify-content: center;
+  padding: 9px 11px;
+  font-size: 0.78rem;
 }
 .delete-btn {
   color: #ef6b73;
@@ -2218,7 +2220,8 @@ section[id] {
     grid-template-columns: repeat(2, 1fr);
   }
   .project-modal-body {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+    gap: 18px;
   }
   .project-modal-image {
     aspect-ratio: 16/9;
@@ -2266,11 +2269,11 @@ section[id] {
     max-height: calc(100vh - 32px);
   }
   .project-modal-body {
-    padding: 24px;
-    gap: 20px;
+    padding: 18px;
+    gap: 14px;
   }
   .project-modal-details h2 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 }
 

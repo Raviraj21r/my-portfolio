@@ -198,6 +198,15 @@ function openProjectModal(card) {
   document.querySelector('#modal-project-challenges').textContent = card.dataset.projectChallenges || '';
   document.querySelector('#modal-project-solutions').textContent = card.dataset.projectSolutions || '';
   document.querySelector('#modal-project-results').textContent = card.dataset.projectResults || '';
+
+  projectModal.querySelectorAll('.project-modal-section').forEach((section) => {
+    const content = section.querySelector('p');
+    const valueSpans = section.querySelectorAll('p span');
+    const hasContent = valueSpans.length
+      ? [...valueSpans].some((span) => span.textContent.trim())
+      : content?.textContent.trim();
+    section.hidden = !hasContent;
+  });
   
   const demoLink = document.querySelector('#modal-project-demo');
   const githubLink = document.querySelector('#modal-project-github');
