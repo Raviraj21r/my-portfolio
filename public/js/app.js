@@ -42,10 +42,9 @@ function applyTheme(theme) {
   themeToggle.setAttribute('aria-label', isDark ? 'Switch to light theme' : 'Switch to dark theme');
 }
 
-applyTheme(localStorage.getItem('portfolio-theme') || 'light');
+applyTheme('dark');
 themeToggle.addEventListener('click', () => {
   const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-  localStorage.setItem('portfolio-theme', nextTheme);
   applyTheme(nextTheme);
 });
 
