@@ -15,6 +15,23 @@ const newsletterForm = document.querySelector('#newsletter-form');
 const newsletterStatus = document.querySelector('#newsletter-status');
 const cvDownload = document.querySelector('#cv-download');
 
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.skill-card, .work-card').forEach((card) => {
+    card.addEventListener('pointermove', (event) => {
+      if (event.pointerType === 'touch') return;
+      const bounds = card.getBoundingClientRect();
+      const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+      const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+      card.style.setProperty('--card-tilt-x', `${-y * 5}deg`);
+      card.style.setProperty('--card-tilt-y', `${x * 5}deg`);
+    });
+    card.addEventListener('pointerleave', () => {
+      card.style.setProperty('--card-tilt-x', '0deg');
+      card.style.setProperty('--card-tilt-y', '0deg');
+    });
+  });
+}
+
 function showToast(message, type = 'info') {
   const toast = document.createElement('div');
   toast.className = `toast toast-${type}`;
